@@ -41,7 +41,7 @@ ArrayList *createArrayList(int length)
             list->size=0;
         }
     }
-    printf("Create Array pointers: %p %p\n", list, list->array);
+    //printf("Create Array pointers: %p %p\n", list, list->array);
 //testing to see if malloc failed or not and returning the address of the list array
     if(list->array!=NULL&&list!=NULL&&list)
     {
@@ -78,22 +78,29 @@ char *put(ArrayList *list, char *str)
     if(list&&str)
     {
         printf("------ArrayList before put---------\n");
-                printf("%d\n", list->size);
+        printf("List Size: %d\n", list->size);
         printArrayList(list);
+
+
         if(getSize(list)>=list->capacity)
         {
             expandArrayList(list, (list->capacity*2+1));
         }
+
+
         //buffer the word and then create a perfect amount of memory to fit the word in
-            strcpy(buffer, str);
-            word=malloc(sizeof(char*)*(strlen(buffer)));
-            strcpy(word, buffer);
+        strcpy(buffer, str);
+        word=malloc(sizeof(char*)*(strlen(buffer)));
+        strcpy(word, buffer);
+
+
         //set the address of the array at array->size index to the word and then strcpy the word into it
         list->array[getSize(list)]=word;
-                printf("---------ArrayList after put----------\n");
-                printf("%d\n", list->size);
         list->size=list->size+1;
+        printf("---------ArrayList after put----------\n");
+        printf("List Size: %d\n", list->size);
         printArrayList(list);
+        printf("\n\n\n");
         if(word!=NULL&&list!=NULL&&str!=NULL&&list)
         {
             return word;

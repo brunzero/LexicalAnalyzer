@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1433375562 source:c:\users\bruno\documents\github\lexical_analyzer\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1432181952 c:\users\bruno\documents\github\lexical_analyzer\arraylist.h
+
+1433377259 source:c:\users\bruno\documents\github\lexical_analyzer\lexi.c
+	<stdio.h>
+	<stdlib.h>
+
