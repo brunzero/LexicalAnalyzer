@@ -8,11 +8,11 @@ typedef struct Token
     int sym;
 }Token;
 
-char code [1000];
 FILE *codeFile;
-int takingInput();
+void load();
 int structIndex = 0;
 Token *tokenArray;
+ArrayList *codeArray;
 
 void structPut(char *word, int num)
 {
@@ -20,42 +20,30 @@ void structPut(char *word, int num)
     {
         printf("Token Array not properly initialized");
     }
-
-    Token newToken;
-    newToken.sym = num;
-    newToken.word = word;
-    tokenArray[structIndex] = newToken;
+    tokenArray[structIndex].word = word;
+    tokenArray[structIndex].sym = num;
 }
 
-void initStructArray()
+void initArrays()
 {
     tokenArray = malloc(sizeof(Token)*10000);
+    codeArray = createArrayList(10);
 }
 
 int main()
 {
+    initArrays();
 
-    initStructArray(tokenArray);
-    structPut("read", 10);
-
-    printf("%s\n\n\n\n", tokenArray[0]);
-
-    ArrayList *stream;
-
-    stream = createArrayList(10);
-
-    put(stream, "read");
-
-
-
-    takingInput();
+    load();
     return 0;
 }
 
-int takingInput()
+void load()
 {
+    char buffer[256];
+    char symbolBuffer[2];
     int i = 0;
-    int x, y;
+    int x, codeIndex;
     codeFile = fopen("input.txt", "r");
     if(!codeFile)
     {
@@ -65,9 +53,30 @@ int takingInput()
     }
     while ((x = fgetc(codeFile)) != EOF)
     {
-        code[i] = x;
-        code[i+1] = '\0';
-        i ++;
+
+        if(isSymbol(x))
+        {
+            put(codeArray, buffer);
+            symbolBuffer[0] = x;
+            symbolBuffer[1] = '\0';
+            put(codeArray, symbolBuffer);
+            i = 0;
+        }
+        else
+        {
+            buffer[i] = x;
+            buffer[i+1] = '\0';
+            i++;
+        }
     }
-    printf("%s", code);
+    printArrayList(codeArray);
+}
+
+int isSymbol(int x)
+{
+    if((x>=32 && x<=47) || (x>=58 && x<=64) || (x>= 91 && x<=96) || (x>=123 && x<=126))
+    {
+        return 1;
+    }
+    return 0;
 }

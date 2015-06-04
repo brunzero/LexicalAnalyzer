@@ -77,9 +77,9 @@ char *put(ArrayList *list, char *str)
     char buffer[32], *word=NULL;
     if(list&&str)
     {
-        printf("------ArrayList before put---------\n");
-        printf("List Size: %d\n", list->size);
-        printArrayList(list);
+        //printf("------ArrayList before put---------\n");
+        //printf("List Size: %d\n", list->size);
+        //printArrayList(list);
 
 
         if(getSize(list)>=list->capacity)
@@ -97,10 +97,10 @@ char *put(ArrayList *list, char *str)
         //set the address of the array at array->size index to the word and then strcpy the word into it
         list->array[getSize(list)]=word;
         list->size=list->size+1;
-        printf("---------ArrayList after put----------\n");
-        printf("List Size: %d\n", list->size);
-        printArrayList(list);
-        printf("\n\n\n");
+        //printf("---------ArrayList after put----------\n");
+        //printf("List Size: %d\n", list->size);
+        //printArrayList(list);
+        //printf("\n\n\n");
         if(word!=NULL&&list!=NULL&&str!=NULL&&list)
         {
             return word;
