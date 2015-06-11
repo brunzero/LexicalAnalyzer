@@ -30,12 +30,13 @@ void initArrays()
     codeArray = createArrayList(10);
 }
 
-int main()
+void erase(char *buffer)
 {
-    initArrays();
-
-    load();
-    return 0;
+    int j;
+    for(j=0; j<256; j++)
+    {
+        buffer[j] = NULL;
+    }
 }
 
 void load()
@@ -43,7 +44,11 @@ void load()
     char buffer[256];
     char symbolBuffer[2];
     int i = 0;
-    int x, codeIndex;
+    int z, x, codeIndex;
+    for(z = 0; z<256; z++)
+    {
+        buffer[z] = NULL;
+    }
     codeFile = fopen("input.txt", "r");
     if(!codeFile)
     {
@@ -56,10 +61,19 @@ void load()
 
         if(isSymbol(x))
         {
-            put(codeArray, buffer);
+            if(*buffer=='\n')
+                printf("hello");
+            if(*buffer!=0)
+                put(codeArray, buffer);
+
+            erase(buffer);
+
+
             symbolBuffer[0] = x;
-            symbolBuffer[1] = '\0';
+            //symbolBuffer[1] = '\0';
+
             put(codeArray, symbolBuffer);
+            erase(symbolBuffer);
             i = 0;
         }
         else
@@ -69,7 +83,44 @@ void load()
             i++;
         }
     }
-    printArrayList(codeArray);
+}
+
+void iradicateComments(ArrayList *arrayList)
+{
+    int i;
+    for(i = 0; i<arrayList->size; i++)
+    {
+        if(*get(arrayList, i)=='/')
+        {
+            if(*get(arrayList, i+1)=='*')
+            {
+                while(*get(arrayList, i+1)!='/')
+                {
+                    removeElement(arrayList, i);
+                }
+                    removeElement(arrayList, i);
+                    removeElement(arrayList, i);
+            }
+        }
+    }
+}
+
+
+void cleanInput(ArrayList *arrayList)
+{
+    int i;
+    iradicateComments(arrayList);
+    for(i=0; i<arrayList->size; i++)
+    {
+        if(*get(arrayList, i)==' ')
+        {
+            removeElement(arrayList, i);
+        }
+        /*else if(*get(arrayList, i)=='\n')
+        {
+            removeElement(arrayList, i);
+        }*/
+    }
 }
 
 int isSymbol(int x)
@@ -78,5 +129,24 @@ int isSymbol(int x)
     {
         return 1;
     }
+    return 0;
+}
+
+void tokenize(Token *tokenArray)
+{
+
+
+}
+
+int main()
+{
+    initArrays();
+    load();
+    iradicateComments(codeArray);
+    printArrayList(codeArray);
+    cleanInput(codeArray);
+    printf("\n\n\n");
+    printArrayList(codeArray);
+
     return 0;
 }

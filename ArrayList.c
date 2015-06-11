@@ -167,7 +167,7 @@ void printArrayList(ArrayList *list)
         {
             if(list->array[i]!=NULL)
             {
-                printf("%s\n", list->array[i]);
+                printf("%s", list->array[i]);
             }
         }
     }
